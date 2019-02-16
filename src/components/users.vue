@@ -14,7 +14,7 @@
           <el-button slot="append" icon="el-icon-search" @click="searchUser()"></el-button>
         </el-input>
         <!-- 添加 -->
-        <el-button type="success">添加用户</el-button>
+        <el-button @click="showDiaAddUser()" type="success">添加用户</el-button>
       </el-col>
     </el-row>
     <!-- 表格 -->
@@ -58,6 +58,28 @@
       layout='total, sizes, prev, pager, next, jumper'
       :total='total'>
     </el-pagination>
+    <!-- 添加用户对话框 -->
+    <el-dialog title="添加用户" :visible.sync="dialogFormVisibleAdd">
+    <!-- 表单 -->
+      <el-form label-position="left" label-width="80px" :model="formdata">
+        <el-form-item label="用户名">
+          <el-input v-model="formdata.username"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="formdata.password"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="formdata.email"></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="formdata.mobile"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleAdd = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisibleAdd = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -70,16 +92,28 @@ export default {
       pagesize: 2,
       total: -1,
       // 表格数据
-      list: []
+      list: [],
+      // 对话框
+      dialogFormVisibleAdd: false,
+      formdata: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      }
     }
   },
   created () {
     this.getTableData()
   },
   methods: {
+    // 添加-打开对话框
+    showDiaAddUser () {
+      this.dialogFormVisibleAdd = true
+    },
     // 搜索-清空时获取所有用户
     getAllUsers () {
-        this.getTableData()
+      this.getTableData()
     },
     // 搜索用户
     searchUser () {

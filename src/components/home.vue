@@ -128,12 +128,6 @@ export default {
   height: 100%;
   background-color: #b3c0d1;
 }
-.aside {
-  /* background-color: blue; */
-}
-.main {
-  /* background-color: yellow; */
-}
 .middle {
   line-height: 60px;
   text-align: center;
