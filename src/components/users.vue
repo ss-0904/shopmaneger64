@@ -27,18 +27,26 @@
         create_time: (...)
         mg_state: (...)
         role_name: (...)
-       -->
+      -->
       <el-table-column prop="id" label="#" width="80"></el-table-column>
       <el-table-column prop="username" label="姓名" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
       <el-table-column prop="mobile" label="电话" width="140"></el-table-column>
       <el-table-column label="创建日期" width="140">
-        <template slot-scope="list">
-          {{ list.row.create_time | fmtdate }}
+        <template slot-scope="list">{{ list.row.create_time | fmtdate }}</template>
+      </el-table-column>
+      <el-table-column prop="name" label="用户状态" width="140">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="用户状态" width="140"></el-table-column>
-      <el-table-column prop="name" label="操作" width="200"></el-table-column>
+      <el-table-column label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" icon="el-icon-edit" circle size="mini" plain></el-button>
+          <el-button type="danger" icon="el-icon-delete" circle size="mini" plain></el-button>
+          <el-button type="success" icon="el-icon-check" circle size="mini" plain></el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 分页 -->
   </el-card>
@@ -62,9 +70,16 @@ export default {
     async getTableData () {
       const AUTH_TOKEN = localStorage.getItem('token')
       this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
-      const res = await this.$http.get(`users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${this.pagesize}`)
+      const res = await this.$http.get(
+        `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
+          this.pagesize
+        }`
+      )
       // console.log(res)
-      const {data, meta: {msg, status}} = res.data
+      const {
+        data,
+        meta: { msg, status }
+      } = res.data
       console.log(msg)
       if (status === 200) {
         this.list = data.users
