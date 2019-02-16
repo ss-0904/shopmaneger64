@@ -99,7 +99,7 @@
 
 <script>
 export default {
-//   beforeCreate() {},
+  //   beforeCreate() {},
   beforeMount () {
     if (!localStorage.getItem('token')) {
       this.$router.push({
@@ -129,10 +129,10 @@ export default {
   background-color: #b3c0d1;
 }
 .aside {
-  background-color: blue;
+  /* background-color: blue; */
 }
 .main {
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 .middle {
   line-height: 60px;
