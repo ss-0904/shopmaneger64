@@ -77,7 +77,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibleAdd = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisibleAdd = false">确 定</el-button>
+        <el-button type="primary" @click="addUser()">确 定</el-button>
       </div>
     </el-dialog>
   </el-card>
@@ -107,9 +107,20 @@ export default {
     this.getTableData()
   },
   methods: {
+    // 添加-发送请求
+    async addUser () {
+      const res = await this.$http.post('users',this.formdata)
+      const {meta:{msg,status}} = res.data
+      if(status === 201){
+        this.dialogFormVisibleAdd = false
+        this.getTableData()
+      }
+    },
     // 添加-打开对话框
     showDiaAddUser () {
       this.dialogFormVisibleAdd = true
+      // 清空
+      this.formdata = {}
     },
     // 搜索-清空时获取所有用户
     getAllUsers () {
