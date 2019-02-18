@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 import App from './App'
+import CusBread from '@/components/CusBread.vue'
 import router from './router'
 import moment from 'moment'
 import axios from 'axios'
@@ -18,6 +19,8 @@ Vue.config.productionTip = false
 Vue.filter('fmtdate', (v) => {
   return moment(v).format('YYYY-MM-DD')
 })
+
+Vue.component(CusBread.name,CusBread)
 
 /* eslint-disable no-new */
 new Vue({
