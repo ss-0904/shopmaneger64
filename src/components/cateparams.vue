@@ -21,7 +21,7 @@
     <el-tabs @tab-click="changeTab()" type="border-card" v-model="active">
       <el-tab-pane name="1" label="动态参数">
         <el-button disabled>设置动态参数</el-button>
-        <el-table height="450px" border stripe :data="arrDy" style="width: 100%">
+        <el-table @expand-change="fn" v-loading="loading" height="450px" border stripe :data="arrDy" style="width: 100%">
           <!-- 展开 -->
           <el-table-column type="expand" width="120">
             <template slot-scope="scope">
@@ -84,6 +84,7 @@
 export default {
   data() {
     return {
+      loading:true,
       form: {},
       options: [],
       selectedOptions: [],
@@ -96,13 +97,20 @@ export default {
       arrStatic: [],
       // 编辑动态参数
       inputVisible: false,
-      inputValue: ""
+      inputValue: "",
+      // inputVals:{},
+      // inputVisibles:[]
     };
   },
   created() {
     this.getGoodsCate();
   },
   methods: {
+    fn(row, expandedRows){
+      if(expandedRows.length>1){
+        expandedRows.shift()
+      }
+    },
     //   编辑tag相关方法
     async handleClose(obj, item) {
       //   this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -184,6 +192,13 @@ export default {
                 ? []
                 : item.attr_vals.trim().split(",");
           });
+
+          // el-input 第一个 v-model="0"
+          // for(let index = 0;index<this.arrDy.length;index++){
+          //   this.inputVals["inputvalue"+index]="";
+          //   // this.inputVisibles["inputVles"+index]=false
+
+          // }
         }
       }
       //   获取静态数据
@@ -208,6 +223,7 @@ export default {
       } = res.data;
       if (status === 200) {
         this.options = data;
+        this.loading=false
       }
     }
   }

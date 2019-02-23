@@ -13,7 +13,7 @@
     </el-row>
 
     <!-- 表格 -->
-    <el-table height="450px" border stripe :data="list" style="width: 100%">
+    <el-table v-loading="loading" height="450px" border stripe :data="list" style="width: 100%">
       <!-- 序号 -->
       <el-table-column type="index"></el-table-column>
 
@@ -52,6 +52,7 @@
 export default {
   data() {
     return {
+      loading:true,
       searchValue: "",
       list: [],
       pagenum: 1,
@@ -81,6 +82,7 @@ export default {
       );
       this.total = resData.data.total;
       this.list = resData.data.goods;
+      this.loading=false
       // console.log(this.list)
     }
   }

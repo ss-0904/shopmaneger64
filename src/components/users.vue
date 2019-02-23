@@ -24,7 +24,7 @@
       </el-col>
     </el-row>
     <!-- 表格 -->
-    <el-table height="350px" :data="list" style="width: 100%">
+    <el-table v-loading="loading" height="350px" :data="list" style="width: 100%">
       <!--
         id: (...)
         username: (...)
@@ -161,6 +161,7 @@
 export default {
   data() {
     return {
+      loading:true,
       query: "",
       pagenum: 1,
       pagesize: 2,
@@ -322,7 +323,11 @@ export default {
       if (status === 200) {
         this.total = data.total;
         this.list = data.users;
+        this.loading=false
         // console.log(this.list);
+      }else{
+        // token无效
+        // this.$message.warning(msg)
       }
     }
   }

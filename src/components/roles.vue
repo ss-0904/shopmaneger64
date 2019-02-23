@@ -4,7 +4,7 @@
     <cus-bread level1="权限管理" level2="角色列表"></cus-bread>
     <el-button class="btn" type="primary">添加角色</el-button>
     <!-- 表格 -->
-    <el-table height="350px" :data="roles" style="width: 100%">
+    <el-table v-loading="loading" @expand-change="fn" height="350px" :data="roles" style="width: 100%">
       <el-table-column type="expand" width="200">
         <template slot-scope="scope">
           <!-- 行列布局 -->
@@ -88,6 +88,7 @@
 export default {
   data() {
     return {
+      loading:true,
       roles: [],
       treelist: [],
       arrCheck: [],
@@ -104,6 +105,11 @@ export default {
     this.getRoles();
   },
   methods: {
+    fn(row, expandedRows){
+      if(expandedRows.length>1){
+        expandedRows.shift()
+      }
+    },
     // 分配权限 - 发送请求
     async setRights(){
       // 获取全选节点的id
@@ -181,6 +187,7 @@ export default {
       } = res.data;
       if (status === 200) {
         this.roles = data;
+        this.loading=false
       }
     }
   }

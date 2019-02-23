@@ -34,7 +34,7 @@
       </div>
     </el-dialog>
     <!-- 表格 -->
-    <el-table height="350" :data="list" style="width: 100%">
+    <el-table v-loading="loading" height="350px" :data="list" style="width: 100%">
       <el-tree-grid 
         prop="cat_name"
         width="200"
@@ -89,6 +89,7 @@ import ElTreeGrid from 'element-tree-grid'
 export default {
   data() {
     return {
+      loading:true,
       list: [],
       pagenum: 1,
       pagesize: 10,
@@ -166,6 +167,7 @@ export default {
       // console.log(this.list);
 
       this.total = res.data.data.total;
+      this.loading=false
     },
     // 分页的相关方法
     handleSizeChange(val) {

@@ -16,9 +16,10 @@
     <el-container>
       <el-aside class="aside" width="200px">
         <el-menu
+        @select="fn"
           :unique-opened="true"
           :router="true"
-          default-active="2"
+          :default-active="$route.name"
           class="el-menu-vertical-demo"
         >
           <!-- 1 -->
@@ -62,6 +63,8 @@ export default {
     this.getMenus()
   },
   methods: {
+    fn(index,indexPath){
+    },
     // 动态导航
     async getMenus(){
       const res = await this.$http.get(`menus`)
